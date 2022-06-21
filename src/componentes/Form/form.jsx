@@ -1,10 +1,12 @@
 import { useState } from "react";
 import "./form.css";
 
-function Form({ agregarTarea, listaDePrioridades }) {
+function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
+  // let descripcion = "";
   const [descripcion, setDescripcion] = useState();
   const [prioridad, setPrioridad] = useState();
   const onChangeDescripcion = (ev) => {
+    // descripcion = ev.target.value;
     setDescripcion(ev.target.value);
   };
   const onChangePrioridad = (ev) => {
@@ -15,6 +17,7 @@ function Form({ agregarTarea, listaDePrioridades }) {
       prioridad,
       descripcion,
     });
+    <p id="mensaje-lista-vacia">ola</p>;
   };
 
   return (
@@ -53,10 +56,17 @@ function Form({ agregarTarea, listaDePrioridades }) {
         </button>
       </form>
       <h3>Tareas</h3>
-      <p id="mensaje-lista-vacia">Parece que no hay nada por aquí!</p>
-      <ul id="lista-tareas">
-        <li>{agregarTarea}</li>
-      </ul>
+      {listaFinal.length === 0 ? (
+        <p id="mensaje-lista-vacia">Parece que no hay nada por aca</p>
+      ) : (
+        <ul id="lista-tareas">
+          {listaFinal.map((tarea) => (
+            <li onClick={() => borrarElem(tarea)} className={tarea.prioridad}>
+              {tarea.descripcion}
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
