@@ -1,28 +1,41 @@
 import { useState } from "react";
 import "./form.css";
+import taskListIcon from "../../Images/taskListIcon.png";
 
 function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
-  // let descripcion = "";
-  const [descripcion, setDescripcion] = useState();
+  const errDes = document.getElementById("errorDescrip");
+  const errPri = document.getElementById("errorPrio");
+  const [descripcion, setDescripcion] = useState("");
   const [prioridad, setPrioridad] = useState();
   const onChangeDescripcion = (ev) => {
-    // descripcion = ev.target.value;
     setDescripcion(ev.target.value);
   };
   const onChangePrioridad = (ev) => {
     setPrioridad(ev.target.value);
   };
   const onClickAgregar = () => {
-    agregarTarea({
-      prioridad,
-      descripcion,
-    });
-    <p id="mensaje-lista-vacia">ola</p>;
+    if (descripcion !== "" && prioridad !== undefined) {
+      errDes.style.display = "none";
+      errPri.style.display = "none";
+      agregarTarea({
+        prioridad,
+        descripcion,
+      });
+    } else if (descripcion === "") {
+      errDes.style.display = "inline";
+      errPri.style.display = "none";
+    } else {
+      errDes.style.display = "none";
+      errPri.style.display = "inline";
+    }
   };
 
   return (
     <>
-      <h1>Lista de tareas!</h1>
+      <div className="title">
+        <h1>Lista de tareas!</h1>{" "}
+        <img src={taskListIcon} alt="Icon TaksList" height="32px" />
+      </div>
       <form action="javascript:void(0);">
         <input
           value={descripcion}
@@ -38,7 +51,7 @@ function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
           onChange={onChangePrioridad}
           value={prioridad}
         >
-          <option value="" disabled selected>
+          <option value="" disabled selected="selected">
             Prioridad
           </option>
           <option value={listaDePrioridades[0].value}>
@@ -55,9 +68,15 @@ function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
           Agregar!
         </button>
       </form>
-      <h3>Tareas</h3>
+      <p className="errorMsg" id="errorDescrip">
+        <b>Agrega una descripción!</b>
+      </p>
+      <p className="errorMsg" id="errorPrio">
+        <b>Agrega una prioridad!</b>
+      </p>
+      <h3>Tareas pendientes:</h3>
       {listaFinal.length === 0 ? (
-        <p id="mensaje-lista-vacia">Parece que no hay nada por aca</p>
+        <p id="mensaje-lista-vacia">No hay tareas agregadas!</p>
       ) : (
         <ul id="lista-tareas">
           {listaFinal.map((tarea) => (

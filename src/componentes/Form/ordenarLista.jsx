@@ -6,7 +6,6 @@ const mapPrioridades = {
 
 export default function ordenarLista(listaFinal) {
   let listaOrdenada = [...listaFinal].sort((a, b) => {
-    console.log(a, b);
     return mapPrioridades[a.proriedad] - mapPrioridades[b.prioridad];
   });
   return listaOrdenada;
