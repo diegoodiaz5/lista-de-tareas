@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./form.css";
 import taskListIcon from "../../Images/taskListIcon.png";
+import close from "../../Images/close.png";
+import edit from "../../Images/editar.png";
 
 function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
   const errDes = document.getElementById("errorDescrip");
@@ -80,9 +82,16 @@ function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
       ) : (
         <ul id="lista-tareas">
           {listaFinal.map((tarea) => (
-            <li onClick={() => borrarElem(tarea)} className={tarea.prioridad}>
-              {tarea.descripcion}
-            </li>
+            <div className="tareaContenedor">
+              <li className={tarea.prioridad}>{tarea.descripcion}</li>
+              <img src={edit} alt="editarTarea" className="editBoton" />
+              <img
+                onClick={() => borrarElem(tarea)}
+                src={close}
+                alt="eliminarTarea"
+                className="botonEliminar"
+              />
+            </div>
           ))}
         </ul>
       )}
