@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./form.css";
 import taskListIcon from "../../Images/taskListIcon.png";
 import close from "../../Images/close.png";
@@ -31,14 +31,18 @@ function Form({ agregarTarea, listaDePrioridades, listaFinal, borrarElem }) {
       errPri.style.display = "inline";
     }
   };
+  useEffect(() => {
+    const formTL = document.getElementById("formTaskList");
+    formTL.addEventListener("submit", (e)=> {e.preventDefault()});
+  })
 
   return (
     <>
       <div className="title">
-        <h1>Lista de tareas!</h1>{" "}
+        <h1>Lista de tareas!</h1>
         <img src={taskListIcon} alt="Icon TaksList" height="32px" />
       </div>
-      <form action="javascript:void(0);">
+      <form id="formTaskList">
         <input
           value={descripcion}
           id="descripcion"
